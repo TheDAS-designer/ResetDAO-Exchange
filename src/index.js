@@ -1,10 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
 import './index.css';
-import App from './App';
+import 'bootstrap/dist/css/bootstrap.css';
+import App from './components/App';
+import configureStore from './store/configureStore'
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+
+
+ReactDOM.render(
+	<Provider store={configureStore()}>
+		<App />
+	</Provider>, 
+	
+	document.getElementById('root'));
+
+var passiveSupported = false;
+    try {
+        var options = Object.defineProperty({}, "passive", {
+            get: function() {
+                passiveSupported = true;
+            }
+        });
+        window.addEventListener("test", null, options);
+    } catch(err) {}
+    function fn() {
+        console.log("fn")
+    }
+    document.addEventListener("mousewheel", fn, passiveSupported ? { passive: true } : false)	
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
