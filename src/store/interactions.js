@@ -38,8 +38,10 @@ const wait = (seconds) => {
 let web3Local, accountLocal, tokenLocal, exchangeLocal, makeOrderType, topOrderId
 
 export  const loadWeb3 = (dispatch) => {
-	const web3 = new Web3(Web3.givenProvider || 'http://127.0.0.1:7545')
+	console.log('===================')
+	const web3 = new Web3(Web3.currentProvider || 'http://127.0.0.1:7545')
 	web3Local = web3
+	console.log('web33333:',web3)
 	dispatch(web3Loaded(web3))
 	return web3
 }
@@ -47,6 +49,7 @@ export  const loadWeb3 = (dispatch) => {
 
 export const loadAccount = async (web3, dispatch) => {
 	const accounts = await web3.eth.getAccounts()
+	console.log('accountsssssss:', accounts)
 	const account = accounts[0]
 	accountLocal = account
 	dispatch(web3AccountLoaded(account))
@@ -206,6 +209,10 @@ export const orderFilling = async (exchange, order, account, dispatch ) => {
 }
 
 export const loadedBalances = async (exchange, web3, token, account, dispatch) => {
+	console.log('exchange:::',exchange)
+	console.log('web3:::',web3)
+	console.log('token:::',token)
+	console.log('account:::',account)
 	const etherBalance = await web3.eth.getBalance(account)
 	dispatch(web3LoadEtherBalance(etherBalance))
 

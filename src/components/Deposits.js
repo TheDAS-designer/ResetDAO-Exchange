@@ -144,7 +144,7 @@ tokenDepositButton =  () => {
 	)
 }
   
-	 componentWillMount(){
+	 componentDidMount(){
 
 	  this.loadBalance(this.props)
 
@@ -152,7 +152,7 @@ tokenDepositButton =  () => {
 
 	async loadBalance(props){
 	  const { exchange, web3, token, account, dispatch } = props
-	  //fecth balances
+	 
 	  await loadedBalances(exchange, web3, token, account, dispatch)
 	}
 /*

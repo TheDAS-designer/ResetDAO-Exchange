@@ -32,18 +32,18 @@ module.exports = async function(callback){
 		let sender, receiver, amount
 		sender = accounts[0]
 		receiver = accounts[1]
-		amount = tokens(100)
+		amount = tokens(10000000)
 
 		await token.transfer(receiver, amount, { from:sender })
 		console.log(`Transferred ${amount} tokens from ${sender} to ${receiver}`)
 
 		const user1 = accounts[0]
 		const user2 = accounts[1]
-		amount = ether(1)
+		amount = ether(10)
 
 		await exchange.depositEther( { from:user1, value:amount })
 		console.log(`Deposit ${amount} Ether from ${user1} `)
-		amount = tokens(100)
+		amount = tokens(10000000)
 		await token.approve( exchange.address, amount, { from:user2 })
 		console.log(`Approve ${amount} tokens from ${user2}`)
 		await exchange.depositToken(token.address, amount, { from:user2 })
@@ -60,7 +60,7 @@ module.exports = async function(callback){
 		let result
 		let orderId
 
-		result = await exchange.makeOrder(token.address, tokens(10), ETHER_ADDRESS, ether(0.1), { from:user1 })
+		result = await exchange.makeOrder(token.address, tokens(200000), ETHER_ADDRESS, ether(0.1), { from:user1 })
 		console.log(`Make order from ${user1}`)
 		orderId = result.logs[0].args.id
 
@@ -74,7 +74,7 @@ module.exports = async function(callback){
 		await wait(1)
 		
 
-		result = await exchange.makeOrder(token.address, tokens(5), ETHER_ADDRESS, ether(0.1), { from:user1 })
+		result = await exchange.makeOrder(token.address, tokens(200000), ETHER_ADDRESS, ether(0.1), { from:user1 })
 		console.log(`Make order from ${user1}`)
 		orderId = result.logs[0].args.id
 		await exchange.fillOrder(orderId, { from:user2 })
@@ -83,7 +83,7 @@ module.exports = async function(callback){
 
 
 
-		result = await exchange.makeOrder(token.address, tokens(15), ETHER_ADDRESS, ether(0.2), { from:user1 })
+		result = await exchange.makeOrder(token.address, tokens(450000), ETHER_ADDRESS, ether(0.2), { from:user1 })
 		console.log(`Make order from ${user1}`)
 		orderId = result.logs[0].args.id
 		await exchange.fillOrder(orderId, { from:user2 })
@@ -91,26 +91,24 @@ module.exports = async function(callback){
 		await wait(1)
 
 
-		result = await exchange.makeOrder(token.address, tokens(25), ETHER_ADDRESS, ether(0.3), { from:user1 })
+		result = await exchange.makeOrder(token.address, tokens(600000), ETHER_ADDRESS, ether(0.3), { from:user1 })
 		console.log(`Make order from ${user1}`)
 		orderId = result.logs[0].args.id
 		await exchange.fillOrder(orderId, { from:user2 })
 		console.log(`Filled order by ${user2}`)
 		await wait(1)
 
-		let _amount1 = 5
+		
 		// 下二十个单子
 		for (let i=0;i<10;i++) {
-			if(i>6) _amount1++
-			result = await exchange.makeOrder(token.address, tokens(_amount1), ETHER_ADDRESS, ether(0.04), { from:user1 })
+			result = await exchange.makeOrder(token.address, tokens(5000), ETHER_ADDRESS, ether(0.04), { from:user1 })
 			console.log(`Make order from ${user1}`)
 			await wait(1)	
 		}
 
-		let _amount2 = 5
+		
 		for (let i=0;i<10;i++) {
-			if(i>4) _amount2++
-			result = await exchange.makeOrder(ETHER_ADDRESS, ether(0.04), token.address, tokens(_amount2), { from:user2 })
+			result = await exchange.makeOrder(ETHER_ADDRESS, ether(0.041), token.address, tokens(5000), { from:user2 })
 			console.log(`Make order from ${user2}`) 
 			await wait(1)	
 		}

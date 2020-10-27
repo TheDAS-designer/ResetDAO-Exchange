@@ -17,7 +17,10 @@ export const etherBalanceSelector = createSelector(etherBalance,
 
 
 const account = state => get(state, 'web3.account')
-export const accountSelector = createSelector(account, a => a)
+export const accountSelector = createSelector(account, a => { 
+console.log('account a:',a) 
+return a})
+
 
 const tokenLoaded = state => get(state, 'token.loaded')
 export const tokenLoadedSelector = createSelector(tokenLoaded, tl => tl)
